@@ -96,27 +96,27 @@ int count_safe_reports_with_problem_dampener(vector<vector<int>>& report_list) {
     return safe_count;
 }
 
-//int main() {
-//    ifstream input_file("input/day2.txt");
-//    if (!input_file.is_open()) {
-//        cerr << "Error: could not open input file." << endl;
-//        return 1;
-//    }
-//
-//    string line;
-//    vector<vector<int>> report_list;
-//
-//    while (getline(input_file, line)) {
-//        report_list.push_back(parse_report(line));
-//    }
-//
-//    int safe_reports = count_safe_reports(report_list);
-//    cout << "Safe reports: " << safe_reports << endl;
-//
-//    int safe_reports_with_problem_dampener = count_safe_reports_with_problem_dampener(report_list);
-//    cout << "Safe reports when Problem Dampener considered: " << safe_reports_with_problem_dampener << endl;
-//
-//    input_file.close();
-//
-//    return 0;
-//}
+int main() {
+   ifstream input_file("input/day2.txt");
+   if (!input_file.is_open()) {
+       cerr << "Error: could not open input file." << endl;
+       return 1;
+   }
+
+   string line;
+   vector<vector<int>> report_list;
+
+   while (getline(input_file, line)) {
+       report_list.push_back(parse_report(line));
+   }
+
+   int safe_reports = count_safe_reports(report_list);
+   cout << "Safe reports: " << safe_reports << endl;
+
+   int safe_reports_with_problem_dampener = count_safe_reports_with_problem_dampener(report_list);
+   cout << "Safe reports when Problem Dampener considered: " << safe_reports_with_problem_dampener << endl;
+
+   input_file.close();
+
+   return 0;
+}

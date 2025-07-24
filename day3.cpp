@@ -84,24 +84,24 @@ long long compute_instructions(vector<string> lines) {
     return sum;
 }
 
-//int main() {
-//    ifstream input_file("input/day3.txt");
-//    if (!input_file.is_open()) {
-//        cerr << "Error: could not open input file." << endl;
-//        return 1;
-//    }
-//
-//    string line;
-//    vector<string> sections;
-//
-//    while (getline(input_file, line)) {
-//        if (!line.empty()) sections.push_back(line);
-//    }
-//
-//    int mults_result = compute_instructions(sections);
-//    cout << "Sum of the multiplications: " << mults_result << endl;
-//
-//    input_file.close();
-//
-//    return 0;
-//}
+int main() {
+   ifstream input_file("input/day3.txt");
+   if (!input_file.is_open()) {
+       cerr << "Error: could not open input file." << endl;
+       return 1;
+   }
+
+   string line;
+   vector<string> sections;
+
+   while (getline(input_file, line)) {
+       if (!line.empty()) sections.push_back(line);
+   }
+
+   int mults_result = compute_instructions(sections);
+   cout << "Sum of the multiplications: " << mults_result << endl;
+
+   input_file.close();
+
+   return 0;
+}
