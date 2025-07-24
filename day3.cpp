@@ -18,7 +18,7 @@ size_t find_next_mul(const string& input, size_t cursor_position, bool* instruct
     size_t next_dont = input.find("don't()", cursor_position);
     size_t next_mul = input.find("mul(", cursor_position);
 
-    if (min(next_do, next_dont) < next_mul) {
+    if (instructions_enabled != nullptr && min(next_do, next_dont) < next_mul) {
         if (next_do < next_dont) *instructions_enabled = true;
         else *instructions_enabled = false;
     }
@@ -26,7 +26,7 @@ size_t find_next_mul(const string& input, size_t cursor_position, bool* instruct
     return next_mul;
 };
 
-vector<pair<int, int>> extract_instructions(const string& input, bool* instructions_enabled) {
+vector<pair<int, int>> extract_instructions(const string& input, bool* instructions_enabled = nullptr) {
     vector<pair<int, int>> instructions;
 
     size_t start = 0;
@@ -62,19 +62,33 @@ vector<pair<int, int>> extract_instructions(const string& input, bool* instructi
         istringstream(numbers.substr(0, comma)) >> x;
         istringstream(numbers.substr(comma + 1)) >> y;
 
-        if(*instructions_enabled) instructions.emplace_back(x, y);
+        if(instructions_enabled  == nullptr || *instructions_enabled) instructions.emplace_back(x, y);
         end = find_next_mul(input, end, instructions_enabled);
     }
 
     return instructions;
 }
 
-long long compute_instructions(vector<string> lines) {
+long long compute_mults_with_instructions(vector<string> lines) {
     long long sum = 0;
     bool instructions_enabled = true;
 
     for (string& line : lines) {
         vector<pair<int, int>> instructions = extract_instructions(line, &instructions_enabled);
+
+        for (pair<int, int> instruction : instructions) {
+            sum += instruction.first * instruction.second;
+        }
+    }
+
+    return sum;
+}
+
+long long compute_mults(vector<string> lines) {
+    long long sum = 0;
+
+    for (string& line : lines) {
+        vector<pair<int, int>> instructions = extract_instructions(line);
 
         for (pair<int, int> instruction : instructions) {
             sum += instruction.first * instruction.second;
@@ -98,8 +112,11 @@ int main() {
        if (!line.empty()) sections.push_back(line);
    }
 
-   int mults_result = compute_instructions(sections);
+   int mults_result = compute_mults(sections);
    cout << "Sum of the multiplications: " << mults_result << endl;
+
+   int mults_with_instructions_result = compute_mults_with_instructions(sections);
+   cout << "Sum of the multiplications considering other instructions: " << mults_with_instructions_result << endl;
 
    input_file.close();
 
